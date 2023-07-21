@@ -18,9 +18,6 @@ export class CoffeeEntity {
   name: string;
 
   @Column()
-  description: string;
-
-  @Column()
   brand: string;
 
   @Column({ default: 0 })
