@@ -6,6 +6,7 @@ import { ApiKeyGuard } from './common/guards/api-key/api-key.guard';
 import { WrapResponseInterceptor } from './common/interceptors/wrap-response/wrap-response.interceptor';
 import { TimeoutInterceptor } from './common/interceptors/timeout/timeout.interceptor';
 import { ParseIntPipe } from './common/pipes/parse-int/parse-int.pipe';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -20,6 +21,16 @@ async function bootstrap() {
       },
     }),
   );
+
+  const options = new DocumentBuilder()
+    .setTitle('ILoveCoffee')
+    .setDescription('Coffee API')
+    .setVersion('1.0')
+    .build();
+
+  const document = SwaggerModule.createDocument(app, options);
+  SwaggerModule.setup('api', app, document);
+
   app.useGlobalInterceptors(
     new WrapResponseInterceptor(),
     new TimeoutInterceptor(),
